@@ -13,7 +13,7 @@ jobs:
 
     services:
       minio:
-        image: wktk/minio-server
+        image: minio/minio:latest
         ports:
           - 9000:9000
         env:
