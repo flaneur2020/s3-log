@@ -10,6 +10,16 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+
+    services:
+      minio:
+        image: wktk/minio-server
+        ports:
+          - 9000:9000
+        env:
+          MINIO_ACCESS_KEY: minioadmin
+          MINIO_SECRET_KEY: minioadmin
+
     steps:
     - uses: actions/checkout@v4
 
@@ -17,17 +27,6 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.23'
-
-    - name: Setup MinIO
-      uses: theohbrothers/setup-minio@v5
-      with:
-        minio-version: 'RELEASE.2024-01-01T16-36-33Z'
-        install-mc: true
-        install-minio: true
-        port: 9000
-        console-port: 9001
-        access-key: minioadmin
-        secret-key: minioadmin
 
     - name: Build
       run: go build -v ./...
